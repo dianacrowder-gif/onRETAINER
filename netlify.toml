@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Type = "text/html; charset=UTF-8"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
