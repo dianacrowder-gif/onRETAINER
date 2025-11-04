@@ -9,41 +9,32 @@
       background-color: #222;
       color: #fff;
       font-family: Helvetica, Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      text-align: center;
+      padding: 50px;
     }
-    input {
-      margin: 8px 0;
+    input, button {
       padding: 8px;
-      width: 220px;
+      margin: 8px;
       border-radius: 4px;
       border: none;
     }
     button {
-      padding: 8px 16px;
       background-color: #4CAF50;
-      border: none;
       color: white;
       cursor: pointer;
-      border-radius: 4px;
     }
-    h1 { margin-bottom: 20px; }
   </style>
 </head>
-
 <body>
-  <h1>Client Portal Login</h1>
-  <input type="email" id="email" placeholder="Email" />
-  <input type="password" id="password" placeholder="Password" />
-  <button id="loginBtn">Login</button>
+  <h1>Login to Your Portal</h1>
+  <input type="email" id="email" placeholder="Email" /><br>
+  <input type="password" id="password" placeholder="Password" /><br>
+  <button id="login">Login</button>
   <p id="error" style="color: red;"></p>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAf4jt3ecmL8Y6xsz27YaGStmtzjea9U",
@@ -57,29 +48,15 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const loginBtn = document.getElementById("loginBtn");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const errorText = document.getElementById("error");
-
-    loginBtn.addEventListener("click", async () => {
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-      if (!email || !password) {
-        errorText.textContent = "Please enter both email and password.";
-        return;
-      }
+    document.getElementById("login").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
       try {
         await signInWithEmailAndPassword(auth, email, password);
         window.location.href = "dashboard.html";
-      } catch (err) {
-        errorText.textContent = err.message;
+      } catch (error) {
+        document.getElementById("error").innerText = error.message;
       }
-    });
-
-    // If user is already logged in, redirect directly to dashboard
-    onAuthStateChanged(auth, (user) => {
-      if (user) window.location.href = "dashboard.html";
     });
   </script>
 </body>
