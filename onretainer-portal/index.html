@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Client Portal Login</title>
+</head>
+<body style="font-family:sans-serif;background:#fafafa;text-align:center;padding:40px;">
+  <h2>Client Portal Login</h2>
+  <input id="email" type="email" placeholder="Email" style="margin:8px;padding:6px;width:220px;"><br>
+  <input id="password" type="password" placeholder="Password" style="margin:8px;padding:6px;width:220px;"><br>
+  <button id="loginBtn" style="padding:6px 14px;">Login</button>
+  <p id="message" style="color:#d33;margin-top:10px;"></p>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  <script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAft4jt3ecimL8Y6xsz27YaGSmtzijea9U",
+  authDomain: "onretainer-d2936.firebaseapp.com",
+  projectId: "onretainer-d2936",
+  storageBucket: "onretainer-d2936.firebasestorage.app",
+  messagingSenderId: "30415789355",
+  appId: "1:30415789355:web:8ccb4a93f8c3d79485796e",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    document.getElementById("loginBtn").addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const msg = document.getElementById("message");
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          msg.style.color = "green";
+          msg.textContent = "✅ Login successful!";
+          setTimeout(() => window.location.href = "dashboard.html", 1200);
+        })
+        .catch(err => { msg.textContent = "❌ " + err.message; });
+    });
+  </script>
+</body>
+</html>
